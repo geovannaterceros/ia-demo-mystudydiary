@@ -12,6 +12,7 @@ const mensajeVacio = document.getElementById("vacio");
 const rachaDias = document.getElementById("racha-dias");
 const rachaTexto = document.getElementById("racha-texto");
 const semanaMinutos = document.getElementById("semana-minutos");
+const mesDias = document.getElementById("mes-dias");
 
 // Lista de sesiones. Cada sesión es: { id, fecha: "AAAA-MM-DD", tema, minutos }
 let sesiones = cargarSesiones();
@@ -123,6 +124,22 @@ function calcularMinutosSemana() {
   return total;
 }
 
+// ---------- Días estudiados este mes ----------
+
+function calcularDiasEstudiadosEsteMes() {
+  const hoy = hoyEnTexto();
+  const inicioMes = hoy.slice(0, 7) + "-01"; // primer día del mes actual
+
+  const diasUnicos = new Set();
+  sesiones.forEach(function (sesion) {
+    // Las fechas "AAAA-MM-DD" se pueden comparar como texto
+    if (sesion.fecha >= inicioMes && sesion.fecha <= hoy) {
+      diasUnicos.add(sesion.fecha);
+    }
+  });
+  return diasUnicos.size;
+}
+
 // ---------- Pintar en pantalla ----------
 
 function mostrarRacha() {
@@ -133,7 +150,12 @@ function mostrarRacha() {
 
 function mostrarMinutosSemana() {
   const minutos = calcularMinutosSemana();
-  semanaMinutos.textContent = minutos + " min esta semana";
+  semanaMinutos.textContent = minutos + " min";
+}
+
+function mostrarDiasMes() {
+  const dias = calcularDiasEstudiadosEsteMes();
+  mesDias.textContent = dias + (dias === 1 ? " día" : " días");
 }
 
 function mostrarLista() {
@@ -153,24 +175,32 @@ function mostrarLista() {
     const elemento = document.createElement("li");
     elemento.className = "sesion";
 
-    const info = document.createElement("div");
+    const linea = document.createElement("div");
+    linea.className = "sesion-linea";
 
-    const tema = document.createElement("p");
+    const tema = document.createElement("span");
     tema.className = "sesion-tema";
     tema.textContent = sesion.tema;
+    tema.title = sesion.tema; // texto completo si el nombre no cabe
 
-    const fecha = document.createElement("p");
-    fecha.className = "sesion-fecha";
-    fecha.textContent = fechaBonita(sesion.fecha);
+    const puntos = document.createElement("span");
+    puntos.className = "sesion-puntos";
+    puntos.setAttribute("aria-hidden", "true");
 
     const minutos = document.createElement("span");
     minutos.className = "sesion-minutos";
     minutos.textContent = sesion.minutos + " min";
 
-    info.appendChild(tema);
-    info.appendChild(fecha);
-    elemento.appendChild(info);
-    elemento.appendChild(minutos);
+    linea.appendChild(tema);
+    linea.appendChild(puntos);
+    linea.appendChild(minutos);
+
+    const fecha = document.createElement("p");
+    fecha.className = "sesion-fecha";
+    fecha.textContent = fechaBonita(sesion.fecha);
+
+    elemento.appendChild(linea);
+    elemento.appendChild(fecha);
     lista.appendChild(elemento);
   });
 }
@@ -178,6 +208,7 @@ function mostrarLista() {
 function mostrarTodo() {
   mostrarRacha();
   mostrarMinutosSemana();
+  mostrarDiasMes();
   mostrarLista();
 }
 

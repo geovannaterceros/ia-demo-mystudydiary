@@ -1,120 +1,242 @@
-/* Estilos generales */
+/* ======================================================
+   Diario de Estudio — estilo "cuaderno sobre el escritorio"
+   La página es una hoja de papel con renglones y margen rojo,
+   como un cuaderno. El sello circular marca la racha, y los
+   datos se alinean con puntos guía, como en un recibo.
+   ====================================================== */
+
+:root {
+  /* Escritorio (fondo) */
+  --escritorio: #211b16;
+
+  /* Papel */
+  --papel: #f6f1e3;
+  --sombra-papel: rgba(0, 0, 0, 0.45);
+
+  /* Renglones y margen, como en una hoja de cuaderno */
+  --renglon: rgba(141, 178, 201, 0.4);
+  --margen: #a3392f;
+  --margen-suave: rgba(163, 57, 47, 0.1);
+  --margen-oscuro: #832d25;
+
+  /* Tinta (texto) */
+  --tinta: #2b2420;
+  --tinta-suave: #7a6f5d;
+  --tinta-linea: rgba(43, 36, 32, 0.22);
+
+  /* Tipografías: sin fuentes externas, para que funcione sin conexión */
+  --fuente-titulo: Georgia, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  --fuente-texto: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --fuente-datos: ui-monospace, "Cascadia Code", Consolas, "Liberation Mono", monospace;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  background: #f3f4f8;
-  color: #1f2937;
+  min-height: 100vh;
+  font-family: var(--fuente-texto);
+  color: var(--tinta);
+  background: var(--escritorio);
+  display: flex;
+  justify-content: center;
+  padding: 32px 16px;
 }
 
+/* La hoja de papel que contiene todo el diario */
 .contenedor {
-  max-width: 560px;
-  margin: 0 auto;
-  padding: 24px 16px 48px;
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0;
+  padding: 36px 28px 44px 68px;
+  background-color: var(--papel);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 31px,
+    var(--renglon) 31px,
+    var(--renglon) 32px
+  );
+  box-shadow: 0 18px 40px var(--sombra-papel), 0 2px 6px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+/* Línea de margen roja, como en una hoja de cuaderno */
+.contenedor::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 44px;
+  width: 2px;
+  background: var(--margen);
+  opacity: 0.55;
 }
 
 h1 {
-  text-align: center;
-  font-size: 1.8rem;
-  margin: 8px 0 24px;
+  font-family: var(--fuente-titulo);
+  font-weight: 700;
+  font-size: 2rem;
+  margin: 0 0 28px;
+  color: var(--tinta);
 }
 
 h2 {
-  font-size: 1.15rem;
-  margin: 0 0 16px;
+  font-family: var(--fuente-titulo);
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin: 0 0 18px;
+  color: var(--margen);
 }
 
-/* Tarjetas */
-.tarjeta {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+.divisor {
+  border: none;
+  border-top: 1px solid var(--tinta-linea);
+  margin: 30px 0;
 }
 
-/* Racha */
-.racha {
+/* ---------- Racha ---------- */
+
+.seccion-racha {
   text-align: center;
-  background: linear-gradient(135deg, #ff9a3c, #ff5f6d);
-  color: #ffffff;
 }
 
 .racha-titulo {
-  margin: 0;
-  font-size: 1rem;
-  opacity: 0.9;
-}
-
-.racha-numero {
-  margin: 4px 0;
-  font-size: 4rem;
-  font-weight: 800;
-  line-height: 1.1;
-}
-
-.racha-texto {
-  margin: 0;
-  font-size: 1rem;
-}
-
-.semana-texto {
-  margin: 8px 0 0;
+  margin: 0 0 16px;
   font-size: 0.9rem;
-  opacity: 0.85;
+  color: var(--tinta-suave);
 }
 
-/* Formulario */
+/* El "sello" de la racha, como un sello de biblioteca marcando los días */
+.sello {
+  width: clamp(112px, 30vw, 148px);
+  height: clamp(112px, 30vw, 148px);
+  margin: 0 auto;
+  border-radius: 50%;
+  border: 3px solid var(--margen);
+  box-shadow: 0 0 0 6px var(--papel), 0 0 0 8px rgba(163, 57, 47, 0.35);
+  transform: rotate(-4deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+
+.sello-numero {
+  font-family: var(--fuente-datos);
+  font-weight: 700;
+  font-size: clamp(2.1rem, 8vw, 2.8rem);
+  color: var(--margen);
+  line-height: 1;
+}
+
+.sello-texto {
+  font-family: var(--fuente-texto);
+  font-size: 0.78rem;
+  color: var(--tinta-suave);
+}
+
+.racha-datos {
+  max-width: 260px;
+  margin: 20px auto 0;
+  text-align: left;
+}
+
+/* Fila "etiqueta ..... valor", como una línea de recibo */
+.dato-fila {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 6px 0;
+  font-size: 0.9rem;
+}
+
+.dato-etiqueta {
+  flex-shrink: 0;
+  color: var(--tinta-suave);
+}
+
+.dato-puntos {
+  flex: 1 1 auto;
+  min-width: 10px;
+  border-bottom: 2px dotted var(--tinta-linea);
+  margin-bottom: 4px;
+}
+
+.dato-valor {
+  flex-shrink: 0;
+  font-family: var(--fuente-datos);
+  font-weight: 700;
+  color: var(--tinta);
+}
+
+/* ---------- Formulario ---------- */
+
 label {
   display: block;
-  font-weight: 600;
-  font-size: 0.9rem;
-  margin-bottom: 6px;
+  font-size: 0.85rem;
+  color: var(--tinta-suave);
+  margin-bottom: 4px;
 }
 
 input {
+  display: block;
   width: 100%;
-  padding: 12px;
-  margin-bottom: 16px;
+  padding: 8px 2px;
+  margin-bottom: 20px;
+  font-family: inherit;
   font-size: 1rem;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  background: #fafafa;
+  color: var(--tinta);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--tinta-linea);
+  border-radius: 0;
 }
 
 input:focus {
   outline: none;
-  border-color: #ff7a50;
-  background: #ffffff;
-}
-
-button {
-  width: 100%;
-  padding: 14px;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #ffffff;
-  background: #ff6a4d;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #f0553a;
+  border-bottom-color: var(--margen);
 }
 
 .error {
-  color: #dc2626;
-  font-size: 0.9rem;
-  margin: 0 0 12px;
+  color: var(--margen);
+  font-size: 0.85rem;
+  margin: -10px 0 16px;
   min-height: 1em;
 }
 
-/* Lista de sesiones */
+button {
+  display: block;
+  margin-left: auto;
+  min-width: 180px;
+  padding: 12px 28px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--papel);
+  background: var(--margen);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+button:hover {
+  background: var(--margen-oscuro);
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--tinta);
+  outline-offset: 3px;
+}
+
+/* ---------- Lista de sesiones ---------- */
+
 .lista {
   list-style: none;
   margin: 0;
@@ -122,38 +244,96 @@ button:hover {
 }
 
 .sesion {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid #eceef2;
+  padding: 14px 0;
+  border-bottom: 1px dashed var(--tinta-linea);
 }
 
 .sesion:last-child {
   border-bottom: none;
 }
 
-.sesion-tema {
-  margin: 0;
-  font-weight: 600;
-  word-break: break-word;
+.sesion-linea {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
 }
 
-.sesion-fecha {
-  margin: 2px 0 0;
-  font-size: 0.85rem;
-  color: #6b7280;
+.sesion-tema {
+  margin: 0;
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--fuente-titulo);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.sesion-puntos {
+  flex: 1 1 auto;
+  min-width: 10px;
+  border-bottom: 2px dotted var(--tinta-linea);
+  margin-bottom: 5px;
 }
 
 .sesion-minutos {
   flex-shrink: 0;
+  font-family: var(--fuente-datos);
   font-weight: 700;
-  color: #ff6a4d;
+  font-size: 0.95rem;
+  color: var(--margen);
+}
+
+.sesion-fecha {
+  margin: 4px 0 0;
+  font-family: var(--fuente-datos);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  color: var(--tinta-suave);
 }
 
 .vacio {
   margin: 0;
-  color: #6b7280;
+  padding: 20px 0;
   text-align: center;
+  font-family: var(--fuente-titulo);
+  font-style: italic;
+  color: var(--tinta-suave);
+}
+
+.vacio::before {
+  content: "✎  ";
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 480px) {
+  body {
+    padding: 0;
+  }
+
+  .contenedor {
+    padding: 28px 18px 36px 44px;
+    box-shadow: none;
+  }
+
+  .contenedor::before {
+    left: 22px;
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  button {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -21,6 +21,7 @@ Web estática para registrar sesiones de estudio y motivarse viendo la racha de 
 - Racha = días consecutivos con al menos 1 sesión que terminan hoy. Si hoy no hay sesión pero ayer sí, la racha sigue viva y se cuenta desde ayer. 
 - Varias sesiones el mismo día cuentan como un solo día. Las fechas futuras no suman. 
 - Semana para el total de minutos: lunes a domingo, hora local. Las fechas futuras no suman (misma regla que la racha). 
+- Días estudiados en el mes: mes actual (día 1 hasta hoy, hora local). Mismo día con varias sesiones cuenta un solo día. Las fechas futuras no suman (misma regla que la racha y la semana). 
 
 ## Forma de trabajar 
 - Haz solo lo que se pide: no añadas funcionalidades por tu cuenta. 

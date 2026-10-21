@@ -11,15 +11,30 @@
     <h1>Diario de Estudio</h1>
 
     <!-- Racha actual -->
-    <section class="tarjeta racha">
+    <section class="seccion-racha">
       <p class="racha-titulo">Racha actual</p>
-      <p class="racha-numero">🔥 <span id="racha-dias">0</span></p>
-      <p class="racha-texto" id="racha-texto">días seguidos</p>
-      <p class="semana-texto" id="semana-minutos">0 min esta semana</p>
+      <div class="sello">
+        <span class="sello-numero" id="racha-dias">0</span>
+        <span class="sello-texto" id="racha-texto">días seguidos</span>
+      </div>
+      <div class="racha-datos">
+        <p class="dato-fila">
+          <span class="dato-etiqueta">Esta semana</span>
+          <span class="dato-puntos" aria-hidden="true"></span>
+          <span class="dato-valor" id="semana-minutos">0 min</span>
+        </p>
+        <p class="dato-fila">
+          <span class="dato-etiqueta">Este mes</span>
+          <span class="dato-puntos" aria-hidden="true"></span>
+          <span class="dato-valor" id="mes-dias">0 días</span>
+        </p>
+      </div>
     </section>
 
+    <hr class="divisor">
+
     <!-- Formulario para registrar una sesión -->
-    <section class="tarjeta">
+    <section>
       <h2>Registrar sesión</h2>
       <form id="formulario">
         <label for="fecha">Fecha</label>
@@ -37,8 +52,10 @@
       </form>
     </section>
 
+    <hr class="divisor">
+
     <!-- Lista de sesiones -->
-    <section class="tarjeta">
+    <section>
       <h2>Sesiones</h2>
       <p class="vacio" id="vacio">Todavía no hay sesiones registradas.</p>
       <ul class="lista" id="lista"></ul>
