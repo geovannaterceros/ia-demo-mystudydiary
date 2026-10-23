@@ -18,4 +18,11 @@ Memoria del proyecto entre sesiones. Máximo ~50 líneas: resume o elimina lo qu
 
 ## Próximos pasos 
 - Revisar el nuevo diseño en el navegador (no se pudo verificar con captura de pantalla en esta sesión; el usuario rechazó instalar la extensión de Chrome). 
-- Si el estilo "cuaderno" no convence, lo anterior (tarjetas con gradiente) está en el historial de git para comparar. 
+- Si el estilo "cuaderno" no convence, lo anterior (tarjetas con gradiente) está en el historial de git para comparar.
+- Spec 001 (mapa de calor) lista en `specs/001-heat-map/spec.md`; falta el plan de implementación.
+
+## Spec 001 — Mapa de calor (2026-10-22)
+- 52 semanas estilo GitHub, dentro de la tarjeta de racha existente (no nueva sección).
+- Color por niveles fijos de minutos (no relativos al usuario); umbrales exactos aún por confirmar.
+- Tooltip con fecha, minutos y temas al pasar cursor/tocar; días futuros visualmente distintos de días sin sesión.
+- Dudas abiertas en la spec: umbrales de color, posición inicial del scroll en móvil, truncado de temas largos, y si el diseño "cuaderno" de la tarjeta de racha necesita rediseño para caber 52 columnas (revisar al planificar). 
